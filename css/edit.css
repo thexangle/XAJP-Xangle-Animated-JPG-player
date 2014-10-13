@@ -1,0 +1,12 @@
+﻿html,body {width:100%; height:100%}
+body { background: #202020;overflow:hidden;}
+
+.menu {height: 300px;width: 1500px;}
+
+.menu ul {list-style-type:none; margin:0; padding:0; display:block;}
+.menu img {height: 250px;}
+.menu li {display:inline; padding-left: 50px; }
+
+.wrapper-center {margin: 0px auto; }
+
+   

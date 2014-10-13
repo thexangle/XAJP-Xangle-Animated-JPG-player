@@ -1,0 +1,166 @@
+/*
+CSS Reset 2011 (Eric Meyer)
+*/
+
+html, body, div, span, applet, object, iframe,
+h1, h2, h3, h4, h5, h6, p, blockquote, pre,
+a, abbr, acronym, address, big, cite, code,
+del, dfn, img, ins, kbd, q, s, samp,
+small, strike, sub, sup, tt, var,
+b, u, i, center,
+dl, dt, dd, ol, ul, li,
+fieldset, form, label, legend,
+table, caption, tbody, tfoot, thead, tr, th, td,
+article, aside, canvas, details, figcaption, figure, 
+footer, header, hgroup, menu, nav, section, summary,
+time, mark, audio, video {
+	margin: 0;
+	padding: 0;
+	border: 0;
+	outline: 0;
+	font-size: 100%;
+	font: inherit;
+	vertical-align: baseline;
+}
+/* HTML5 display-role reset for older browsers */
+article, aside, details, figcaption, figure, 
+footer, header, hgroup, menu, nav, section {
+	display: block;
+}
+body {
+	line-height: 1;
+}
+ol, ul {
+	list-style: none;
+}
+blockquote, q {
+	quotes: none;
+}
+blockquote:before, blockquote:after,
+q:before, q:after {
+	content: '';
+	content: none;
+}
+
+
+/* remember to highlight inserts somehow! */
+ins {
+	text-decoration: none;
+}
+del {
+	text-decoration: line-through;
+}
+
+table {
+	border-collapse: collapse;
+	border-spacing: 0;
+}
+
+
+
+/*
+Project: ...
+Author: Alexandre Michel / Orangium
+Email: projets@theintegrateur.com
+*/
+
+
+/* Body
+--------------------------------------------------------------------------------------- */
+body { background: #ccct; font-family: Arial, Helvetica, sans-serif; font-size: 14px; color: #6c98ae;}
+
+
+/* Links
+--------------------------------------------------------------------------------------- */
+a:link { color: #fff; text-decoration: none;}
+a:visited { color: #fff;}
+a:hover { color: #fff;}
+a:active { color: #fff;}
+
+
+
+/* General Classes
+--------------------------------------------------------------------------------------- */
+.float { float: left;}
+.float-r { float: right;}
+
+
+
+/* Clearfix
+--------------------------------------------------------------------------------------- */
+.group:before, .group:after { content:""; display:table;}
+.group:after { clear:both;}
+.group { zoom:1; /* For IE 6/7 (trigger hasLayout) */}
+
+
+
+/* Wrapper
+--------------------------------------------------------------------------------------- */
+#wrapper { width: 600px; margin: 100px auto;}
+
+
+
+/* Embed Player > Basics
+--------------------------------------------------------------------------------------- */
+.embed-player { position: relative;}
+.embed-player img { display: block;}
+.embed-player-controls { background: url(../img/bg-bar.jpg) 0 0 repeat-x; height: 35px; position: relative;}
+
+
+
+/* Embed Player > Controls
+--------------------------------------------------------------------------------------- */
+.embed-left, .embed-right { display: inline-block;}
+.embed-left li, .embed-right li { float: left;}
+.embed-left li a, .embed-right li a { display: block; height: 35px; padding: 0 10px; text-indent: -9999px;}
+
+.embed-left li { background: url(../img/bg-spacer.jpg) center right no-repeat;}
+.embed-left .btn-replay { width: 17px; background: url(../img/icon-replay.png) center no-repeat;}
+.embed-left .btn-reverse { width: 16px; background: url(../img/icon-reverse.png) center no-repeat;}
+.embed-left .btn-fast { width: 14px; background: url(../img/icon-fast.png) center no-repeat;}
+.embed-left .btn-slow { width: 15px; background: url(../img/icon-slow.png) center no-repeat;}
+.embed-left .btn-tools { width: 15px; background: url(../img/icon-tools.png) center no-repeat;}
+.embed-left .btn-embed { width: 13px; background: url(../img/icon-embed.png) center no-repeat;}
+
+.embed-right { float: right; padding: 0 10px 0 0;}
+.embed-right .btn-logo { width: 19px; background: url(../img/logo-orangium.png) center no-repeat;}
+
+
+
+/* Embed Player > Thumbnails Panel
+--------------------------------------------------------------------------------------- */
+#thumbnails, #share-tools, .more-thumb-overlay, #tooltip { display: none;}
+
+.embed-viewer { position: relative;}
+.embed-overlay-wrap { width: 100%; height: 100%; position: absolute; top: 0; background: rgb(0, 0, 0); background: rgba(0, 0, 0, 0.7); color: #fff;}
+.embed-thumbs { width: 376px; height: 376px; position: absolute; left: 50%; top: 50%; margin: -188px 0 0 -188px;}
+.embed-thumbs li { float: left; margin: 0 8px 8px 0;}
+.embed-thumbs li:nth-child(2), .embed-thumbs li:nth-child(4) { margin: 0 0 8px 0;}
+.embed-thumbs li a { display: inline-block; position: relative;}
+.embed-thumbs li a img { border: 2px solid #fff;}
+
+.more-thumb-overlay { width: 100%; height: 100%; position: absolute; top: 0; text-align: right; background: rgb(0, 0, 0); background: rgba(0, 0, 0, 0.8);}
+.more-thumb-info { position: absolute; bottom: 10px; right: 10px;}
+.more-thumb-info h1 { font-size: 18px; font-weight: bold; margin: 0 0 5px 0;}
+.more-thumb-info h2 { margin: 0 0 5px 0;}
+.more-thumb-info h2, .more-thumb-info h3 { font-size: 13px;}
+
+
+
+/* Embed Player > Form Panel
+--------------------------------------------------------------------------------------- */
+#share-box { width: 376px; height: 292px; position: absolute; left: 50%; top: 50%; margin: -146px 0 0 -188px; font-size: 13px;}
+#share-box h2 { font-size: 29px; font-weight: bold; text-transform: uppercase; margin: 0 0 26px 0;}
+#share-box label, #share-box input, #share-box textarea { display: block; width: 97%; font-size: 12px;}
+#share-box input, #share-box textarea { border: none; padding: 6px 5px;}
+#share-box label { margin: 0 0 5px 0;}
+#share-box input { margin: 0 0 22px 0;}
+
+
+
+/* Embed Player > Tooltip
+--------------------------------------------------------------------------------------- */
+#tooltip { position: absolute; width: 100%; bottom: 0; background: #1c1c1c; color: #fff; font-style: italic; box-shadow: 0 0 5px #000 inset;}
+#tooltip p { padding: 10px;}
+
+

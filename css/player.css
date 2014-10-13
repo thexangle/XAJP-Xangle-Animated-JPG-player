@@ -1,0 +1,141 @@
+﻿/*Player > Basics 
+--------------------------------------------------------------------------------------- */
+
+/*général*/
+.livePixel { display: block; background: #000; position: relative; color:#ccc;  font-family: Arial, Helvetica; font-size:15px; overflow: hidden; }
+#canvas { margin: 0 auto; display:block; }
+
+/*Status Bar*/
+#status {display: none; position: absolute;width: 100px; height:5px; margin: -15px 0 0 -25px; top:50%; left:50%; font-size:20px; }
+
+#play-container { display:none;}
+#big-btn-play img  {width:15%; height: auto; padding: 0; overflow: auto; margin: auto; position: absolute; top: 0; left: 0; bottom: 0; right: 0;  }
+/*#big-btn-play div { position:relative; left:50%; background-image: url("../img/play-button.png"); background-repeat: no-repeat;}*/
+
+
+
+/*Player > Share pannel
+--------------------------------------------------------------------------------------- */
+.player-sharing { position: absolute; width: 100%; height: 100%; display: none; z-index: 3; background: rgba(0, 0, 0, 0.8); color: white;}
+
+.player-sharing .btn-close { background-image: url(../img/icons-sprite.png); background-repeat: no-repeat; display: block; float: right; }
+.player-sharing .btn-close { width: 13px; height: 14px;  background-position: 0 -271px;}
+.player-sharing .btn-close:hover{ background-position: -22px -271px;}
+
+.player-sharing .sharing-box { position: absolute; width: 350px; height: 350px; margin: -150px 0 0 -150px; top:50%; left:50%; text-align: center; }
+.player-sharing .sharing-box h1 { display: inline; letter-spacing: 2px; font-size:25px; }
+.player-sharing .sharing-box .group {text-align: left; width: 100%; margin-top: 20px; }
+.player-sharing .sharing-box label { display: block; font-size:12px; margin: 5px 0; }
+.player-sharing .sharing-box input { width:95%; border: none; padding: 6px 5px; font-size: 12px; outline: none;}
+.player-sharing .sharing-box .button { text-decoration: none; background: none repeat scroll 0 0 #E3E3E3; border: 1px solid #BBBBBB!important; border-radius: 3px 3px 3px 3px; box-shadow: 0 0 1px 1px #F6F6F6 inset; color: black; display: inline-block; font: bold 12px/1 "helvetica neue",helvetica,arial,sans-serif; padding: 8px; text-align: center; text-shadow: 0 1px 0 #FFFFFF; margin: 0 14px 5px 0; letter-spacing: 2px;  }
+.player-sharing .sharing-box .button:hover { background: none repeat scroll 0 0 #D9D9D9; box-shadow: 0 0 1px 1px #EAEAEA inset; color: #222222; cursor: pointer; }
+.player-sharing .sharing-box .button:active { background: none repeat scroll 0 0 #D0D0D0; box-shadow: 0 0 1px 1px #E3E3E3 inset; color: #000000; }
+.player-sharing .sharing-box a.active {background:#b2b1b1!important;}
+
+.player-sharing .sharing-box #download-btn {display: inline; margin: 0 25%; position: absolute; }
+
+/*Player > Info Box
+--------------------------------------------------------------------------------------- */
+.infoBox { position: absolute; bottom:50px; left:10px; display: none; z-index: 3; color: white; background-color: rgba(0,0,0,0.5); font-family:"Courier New", Courier, monospace; font-size: 10px; }
+.infoBox p{ margin: 2px 5px;  }
+
+
+/*Player > Controls
+--------------------------------------------------------------------------------------- */
+
+
+/*control bar*/
+.player-controls { width: 100%; position: absolute; bottom: -2px; z-index: 99; }
+.player-controls { background: url(../img/bg-bar.jpg) 0 0 repeat-x; height: 35px; width: 100%; display: block;  overflow: hidden; }
+
+.player-controls ul{ display:inline-block; list-style: none!important; padding: 0!important; margin: 0!important;}
+.player-controls ul li { background: url(../img/bg-spacer.jpg) center right no-repeat; display: table-cell; height: 35px; vertical-align: middle;}
+.player-controls ul li a { display: block;  text-indent: -9999px; border: none!important; padding: 5px 15px;}
+.player-controls ul.right li{ background: url(../img/bg-spacer.jpg) center left no-repeat; }
+.player-controls ul .btn > span { background-image: url(../img/icons-sprite.png); background-repeat: no-repeat; display: block; }
+
+/*Play*/
+.player-controls ul .btn-play > span { width: 11px; height: 14px; background-position: 0 0;}
+.player-controls ul .btn-play:hover > span{ background-position: -21px 1px;}
+
+/*Pause*/
+.player-controls ul .btn-pause > span{ width: 11px; height: 12px;  background-position: 0 -25px;}
+.player-controls ul .btn-pause:hover > span{ background-position: -21px -25px;}
+
+/*Reverse*/
+.player-controls ul .btn-reverse > span{ width: 16px; height: 15px;  background-position: 0 -87px;}
+.player-controls ul .btn-reverse:hover > span{background-position: -21px -86px;}
+
+/*SpeedUp*/
+.player-controls ul .btn-speedUp > span{ width: 13px; height: 13px;  background-position: 0 -186px;}
+.player-controls ul .btn-speedUp:hover > span{ background-position: -21px -186px;}
+
+/*SpeedDown*/
+.player-controls ul .btn-speedDown > span{ width: 13px; height: 13px;  background-position: 0 -206px;}
+.player-controls ul .btn-speedDown:hover > span{background-position: -21px -206px;}
+
+/*Previous*/
+.player-controls ul .btn-previous > span{ width: 13px; height: 10px;  background-position: 0 -47px;}
+.player-controls ul .btn-previous:hover > span{ background-position: -21px -46px;}
+
+/*Next*/
+.player-controls ul .btn-next > span{ width: 13px; height: 10px;  background-position: 0 -67px;}
+.player-controls ul .btn-next:hover > span{ background-position: -21px -66px;}
+
+/*Shuffle*/
+.player-controls ul .btn-shuffle > span{ width: 16px; height: 15px;  background-position: 0 -112px;}
+.player-controls ul .btn-shuffle:hover > span{ background-position: -21px -111px;}
+
+/*Info*/
+.player-controls ul .btn-info > span{ width: 13px; height: 14px;  background-position: 0 -137px;}
+.player-controls ul .btn-info:hover > span{ background-position: -21px -136px;}
+
+/*Share*/
+.player-controls ul .btn-share > span{ width: 13px; height: 14px;  background-position: 0 -250px;}
+.player-controls ul .btn-share:hover > span{ background-position: -21px -250px;}
+
+/*Settings*/
+.player-controls ul .btn-settings > span{ width: 13px; height: 15px;  background-position: 0 -161px;}
+.player-controls ul .btn-settings:hover > span{ background-position: -21px -160px;}
+
+/*FullScreen*/
+.player-controls ul .btn-fullScreen > span{ width: 13px; height: 13px;  background-position: 0 -227px;}
+.player-controls ul .btn-fullScreen:hover > span{background-position: -21px -227px;}
+
+/*Settings*/
+.player-controls ul .btn-delete > span{ width: 13px; height: 15px;  background-position: 0 -272px;}
+.player-controls ul .btn-delete:hover > span{ background-position: -22px -272px;}
+
+ /*Credit tag*/
+.player-controls ul .credit { margin: 0 10px; color: white; font-size: 15px;}
+.player-controls ul li a.credit { display: block;  text-indent: 0; text-decoration: none; border: none!important; padding: 5px 15px;}
+.player-controls ul li a.credit:hover { color:#ccc;}
+
+
+
+.fb-like { margin: 0 10px;}
+
+#ctn-close {display: inline-block; background-color: #202020; padding: 5px; position:absolute; top:-25px; right:-25px;}
+
+/*Player > Edition Pack
+--------------------------------------------------------------------------------------- */
+.player-recorder {display: inline-block;}
+.player-activation { display:none;}
+
+/*Misceleanous
+--------------------------------------------------------------------------------------- */
+.full { width: 100%; }
+.hide { display: none; }
+.left { float: left; }
+.right { float: right; }
+
+
+/*cursor*/
+#canvas:hover { cursor: url(../img/openhand.cur), default; }
+.closed { cursor: url(../img/closedhand.cur), auto !important; }
+
+
+@media (max-width: 600px) {
+    .btn-area > .btn-info, .btn-area > .btn-fullScreen, .btn-area .credit, .btn-area .btn-share, .player-sharing { display: none!important; }
+    .player-controls {display: none;}
+}
