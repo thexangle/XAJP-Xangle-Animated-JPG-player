@@ -74,6 +74,7 @@ Player.prototype.initSharing = function () {
                                 '<label>Download:</label>' +
                                    '<a href="' + this.settings.downloadUrl + '" class="button embed-size" >Frames</a>' +
                                    '<a href="#" id="animatedGif" class="button embed-size" >Animated Gif</a>' +
+                                   '<a href="#" id="mp4Video" class="button embed-size">MP4</a>' +
                         '</div>' +
                  '</div>'
             );
@@ -145,7 +146,7 @@ Player.prototype.controlBar = function () {
     );
 
 
-    
+
 
     $(".btn-play, #big-btn-play").click(function () {
 
@@ -215,7 +216,7 @@ Player.prototype.controlBar = function () {
 
     $(".btn-share, .btn-close").click(function () {
         $('.player-sharing').fadeToggle('fast');
-       
+
     });
 
     // Data-embed to input box
@@ -226,6 +227,8 @@ Player.prototype.controlBar = function () {
     });
 
     $("#animatedGif").click(function () { obj.animatedGif(); });
+
+    $("#mp4Video").click(function () { obj.mp4Video(); });
 }
 
 /**
@@ -246,7 +249,7 @@ Player.prototype.toggleControl = function () {
     var i = 7;
     $(".livePixel").bind("mousemove click touchstart", function (e) {
 
-        if (e.type == "touchstart" ||  i >= 7) { //Mousse sensivity --> reset the timer if a touch move is detected 
+        if (e.type == "touchstart" || i >= 7) { //Mousse sensivity --> reset the timer if a touch move is detected 
             var timer;
             if (timer) {
                 clearTimeout(timer);
@@ -258,7 +261,7 @@ Player.prototype.toggleControl = function () {
 
             timer = setTimeout(function () {
                 if (!$('.player-controls').is(":hover")) {
-                    $(".player-controls").fadeOut('slow'); 
+                    $(".player-controls").fadeOut('slow');
                     $('#canvas').css({ cursor: 'none' });
                 }
             }, 3000);
@@ -289,11 +292,11 @@ Player.prototype.initInfoBox = function () {
 */
 Player.prototype.setSpeed = function (speed) {
     var obj = this;
-	obj.settings.rotationSpeed = speed;
-	obj.reset();
+    obj.settings.rotationSpeed = speed;
+    obj.reset();
 }
 
-    
+
 /**
 * SetLoop
 */
@@ -303,8 +306,8 @@ Player.prototype.setLoop = function (loop) {
     obj.reset();
 }
 
-   
-    
+
+
 /**
 * Info
 */
@@ -334,72 +337,72 @@ Player.prototype.setKeyBinddings = function () {
     var obj = this; // Obj refers to the player itself such as "this"
     $(document).keydown(function basicBinddings(e) {
 
-            switch (e.keyCode) {
+        switch (e.keyCode) {
 
-                case 32:  /*Toggle play --> spaceBar*/
+            case 32:  /*Toggle play --> spaceBar*/
+                e.preventDefault();
+                if (obj.isAnimated) {
+                    obj.stop();
+                } else {
+                    obj.play();
+                    $('#big-btn-play').fadeOut();
+                }
+                break;
+
+            case 122://F11 --> FullScreen
+                if (obj.settings.fullScreen) {
                     e.preventDefault();
-                    if (obj.isAnimated) {
-                        obj.stop();
-                    } else {
-                        obj.play();
-                        $('#big-btn-play').fadeOut();
-                    }
-                    break;
+                }
+                break;
 
-                case 122://F11 --> FullScreen
-                    if (obj.settings.fullScreen) {
-                        e.preventDefault();
-                    } 
-                    break;
+            case 27: /*Quit fullscreen --> escape*/
+                e.preventDefault();
+                if (obj.settings.fullScreen) {
+                    obj.fullScreen();
+                }
+                break;
 
-                case 27: /*Quit fullscreen --> escape*/
-                    e.preventDefault();
-                    if (obj.settings.fullScreen) {
-                        obj.fullScreen();
-                    }
-                    break;
+            case 73: /*Show the info pannel --> I*/
+                //obj.settings.infoDisplay = !obj.settings.infoDisplay;
+                $(".infoBox").toggle();
+                break;
 
-                case 73: /*Show the info pannel --> I*/
-                    //obj.settings.infoDisplay = !obj.settings.infoDisplay;
-                    $(".infoBox").toggle();
-                    break;
+            case 187:/*Speed Up --> + */
+                if (obj.settings.rotationSpeed > 50) {
+                    obj.settings.rotationSpeed -= 10;
+                    obj.stop();
+                    obj.play();
+                };
+                break;
 
-                case 187:/*Speed Up --> + */
-                    if (obj.settings.rotationSpeed > 50) {
-                        obj.settings.rotationSpeed -= 10;
-                        obj.stop();
-                        obj.play();
-                    };
-                    break;
+            case 189:/*SpeedDown --> - */
+                if (obj.settings.rotationSpeed < 200) {
+                    obj.settings.rotationSpeed += 10;
+                    obj.stop();
+                    obj.play();
+                };
+                break;
 
-                case 189:/*SpeedDown --> - */
-                    if (obj.settings.rotationSpeed < 200) {
-                        obj.settings.rotationSpeed += 10;
-                        obj.stop();
-                        obj.play();
-                    };
-                    break;
+            default:
 
-                 default:
-
-                    //Previous image set --> key left
-                    if ((!e.ctrlKey && e.which == 37) && !obj.settings.singleImageSet && !obj.settings.record) {
-                        obj.next(); // Inverse for studio reason
-                    }
+                //Previous image set --> key left
+                if ((!e.ctrlKey && e.which == 37) && !obj.settings.singleImageSet && !obj.settings.record) {
+                    obj.next(); // Inverse for studio reason
+                }
                     // Next image set --> key right
-                    else if ((!e.ctrlKey && e.which == 39) && !obj.settings.singleImageSet && !obj.settings.record) {
-                        obj.previous();
+                else if ((!e.ctrlKey && e.which == 39) && !obj.settings.singleImageSet && !obj.settings.record) {
+                    obj.previous();
 
-                    } else if (e.ctrlKey && e.which == 39) {/*Skip to next camera --> ctrl + right*/
-                        obj.stop();
-                        obj.render(obj.imageSet.nextCamera());
+                } else if (e.ctrlKey && e.which == 39) {/*Skip to next camera --> ctrl + right*/
+                    obj.stop();
+                    obj.render(obj.imageSet.nextCamera());
 
-                    } else if (e.ctrlKey && e.which == 37) {/* Skip to previous camera --> ctrl + left*/
-                        obj.stop();
-                        obj.render(obj.imageSet.previousCamera());
-                    }
+                } else if (e.ctrlKey && e.which == 37) {/* Skip to previous camera --> ctrl + left*/
+                    obj.stop();
+                    obj.render(obj.imageSet.previousCamera());
+                }
 
-            }//END SWITCH
+        }//END SWITCH
 
     });//END basicBindding
 
@@ -445,7 +448,7 @@ Player.prototype.setFrameSwipe = function () {
 
                 prevX = e.pageX;
                 prevY = e.pageY;
-               
+
 
                 if (obj.imageSet.settings.stopMotion) {
                     switch (slideY) {
@@ -589,7 +592,7 @@ Player.prototype.setFullScreenListener = function () {
 
         document.addEventListener("webkitfullscreenchange", function () {
             obj.fullScreen();
-            
+
         }, false);
     }
 }
@@ -601,7 +604,6 @@ Player.prototype.fullScreen = function () {
     obj.setScreenRatio();
     //obj.toggleControl();
 }
-
 
 
 
@@ -629,7 +631,9 @@ function toggleFullScreen() {
 
 }
 
-
+/**
+* Download an animated gif
+*/
 Player.prototype.animatedGif = function () {
     var obj = this;
     var url = "/index.aspx?a=ImageToContent.CreateGif&nh=1&ajax=1" +
@@ -637,6 +641,20 @@ Player.prototype.animatedGif = function () {
               "&loop=" + this.settings.loop +
               "&clockwise=" + obj.clockwise +
               "&path=" + this.imageSet.data.folderName + "/";
-              
+
+    window.location.href = url;
+}
+
+/**
+* Download an MP4 Video
+*/
+Player.prototype.mp4Video = function () {
+    var obj = this;
+    var url = "/index.aspx?a=ImageToContent.CreateMP4Video&nh=1&ajax=1" +
+        "&speed=" + this.settings.rotationSpeed +
+        "&loop=" + this.settings.loop +
+        "&clockwise=" + obj.clockwise +
+        "&path=" + this.imageSet.data.folderName + "/";
+
     window.location.href = url;
 }
