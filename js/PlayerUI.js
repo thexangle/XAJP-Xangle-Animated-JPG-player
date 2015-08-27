@@ -75,6 +75,8 @@ Player.prototype.initSharing = function () {
                                    '<a href="' + this.settings.downloadUrl + '" class="button embed-size" >Frames</a>' +
                                    '<a href="#" id="animatedGif" class="button embed-size" >Animated Gif</a>' +
                                    '<a href="#" id="mp4Video" class="button embed-size">MP4</a>' +
+                                '<label>MP4 length (Between 1 and 240, default is 10)</label>' +
+                                    '<input id="mp4Duration" value="10" type="nimber" min="1" max="240">'+
                         '</div>' +
                  '</div>'
             );
@@ -654,7 +656,8 @@ Player.prototype.mp4Video = function () {
         "&speed=" + this.settings.rotationSpeed +
         "&loop=" + this.settings.loop +
         "&clockwise=" + obj.clockwise +
-        "&path=" + this.imageSet.data.folderName + "/";
+        "&path=" + this.imageSet.data.folderName + "/"+
+        "&duration=" + $('#mp4Duration').val();
 
     window.location.href = url;
 }
