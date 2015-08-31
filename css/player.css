@@ -22,7 +22,7 @@
 .player-sharing .btn-close { width: 13px; height: 14px;  background-position: 0 -271px;}
 .player-sharing .btn-close:hover{ background-position: -22px -271px;}
 
-.player-sharing .sharing-box { position: absolute; width: 350px; height: 350px; margin: -150px 0 0 -150px; top:40%; left:50%; text-align: center; }
+.player-sharing .sharing-box { position: absolute; width: 350px; height: 350px; margin: -150px 0 0 -150px; top:35%; left:50%; text-align: center; }
 .player-sharing .sharing-box h1 { display: inline; letter-spacing: 2px; font-size:25px; }
 .player-sharing .sharing-box .group {text-align: left; width: 100%; margin-top: 20px; }
 .player-sharing .sharing-box label { display: block; font-size:12px; margin: 5px 0; }
