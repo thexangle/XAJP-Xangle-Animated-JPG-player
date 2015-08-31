@@ -30,7 +30,7 @@ $.fn.Player = function (options, path) {
            '<div class="infoBox"></div>' +
            '<div id="play-container"><a href="#" id="big-btn-play"><img src="img/play-button.png" ></a></div>' +
            '<div class="player-controls"></div>'
-       );
+           );
 
 
     //Verify if canvas are suported
@@ -42,7 +42,12 @@ $.fn.Player = function (options, path) {
 
     if (isCanvasSupported()) {
         //create canvas tag if suported by the browser
-        $(this).append("<canvas id='canvas'></canvas>");
+        $(this).append(
+            '<div id="canvas-wrapper">' +
+            '<canvas id="canvas"></canvas>' +
+            '<canvas id="watermark"></canvas>' +
+            '</div>'
+            );
         player = new Player(options, document.getElementById('canvas').getContext("2d"), path);
 
     } else {
@@ -52,6 +57,7 @@ $.fn.Player = function (options, path) {
         options.crossFade = false;
 
         $("#player-content").append("<img id='canvas'  src='#' >");
+        $("#player-content").append("<img id='watermark'  src='#' >");
         player = new Player(options, null, path);
     }
 
@@ -98,7 +104,7 @@ function Player(options, context, path) {
         keyBindings: true,
         touchBiddings: true,
         
-        record: false,
+        record: false
     }
 
     if (options) {
@@ -170,20 +176,20 @@ Player.prototype.init = function () {
 
 
 Player.prototype.start = function () {
-    
-    function checkStatus(obj) {
-            if (obj.imageSet.status > 90) {
-                $("#status").fadeOut();
-                obj.play();
 
-            } else {
-                //Update the status until 100%
-                setTimeout(function () {
-                    $("#status").show();
-                    $("#status").progressbar({ value: obj.imageSet.status });
-                    checkStatus(obj);
-                }, 10);
-            }
+    function checkStatus(obj) {
+        if (obj.imageSet.status > 90) {
+            $("#status").fadeOut();
+            obj.play();
+
+        } else {
+            //Update the status until 100%
+            setTimeout(function () {
+                $("#status").show();
+                $("#status").progressbar({ value: obj.imageSet.status });
+                checkStatus(obj);
+            }, 10);
+        }
     }
 
     if (this.settings.controlBar) {
@@ -199,7 +205,35 @@ Player.prototype.start = function () {
     }
 }
 
+/**
+* Apply a watermark
+*/
+Player.prototype.applyWatermark = function () {
+    wmElement = document.getElementById("watermark");
+    var obj = this;
+    if(obj.settings.watermark && obj.settings.watermark != ""){
+        var img = new Image();
+        img.src = obj.settings.watermark;
+        img.onload = function () {
+            var height, width, x, y;
+            // Vertical image
+            if(img.height/img.width > 1) {
+                height = wmElement.height / 3;
+                width = img.width * height / img.height;
+            }
+            // Horizontal image
+            else {
+                width = wmElement.width / 4;
+                height = img.height * width / img.width;
+            }
+            // Location
+            x = wmElement.width - width;
+            y = wmElement.height - height;
 
+            wmElement.getContext("2d").drawImage(img, x - 5, y - 5, width, height);
+        }
+    }
+}
 
 /**
 * Load file path in a array
@@ -225,7 +259,6 @@ Player.prototype.autoUpdateSSE = function () {
     }
 
 }
-
 
 /**
 * Load file path in a array
@@ -268,7 +301,7 @@ Player.prototype.load = function (data) {
 * Animate the player
 */
 Player.prototype.play = function (type) {
-   
+
     var obj = this; // Obj refers to the player itself such as "this"
     clearInterval(obj.id);
     obj.isAnimated = true;
@@ -341,12 +374,28 @@ Player.prototype.reset = function () {
 * Print the image in the canvas
 */
 Player.prototype.render = function (image) {
-    
-    if (this.settings.canvas) {
-        var wratio = $(".livePixel").height() / image.height;
-        //Appart for the drawImage that render in a canvas, all the calcul are made to view landscape pictures as well as portrait
-        this.context.drawImage(image, ($(".livePixel").width() - (image.width * wratio)) / 2 , 0, image.width * wratio, $(".livePixel").height());
 
+    if (this.settings.canvas) {
+        //var wratio = $(".livePixel").height() / image.height;
+        //Apart for the drawImage that render in a canvas, all the calculus are made to view landscape pictures as well as portrait
+        //this.context.drawImage(image, ($(".livePixel").width() - (image.width * wratio)) / 2 , 0, image.width * wratio, $(".livePixel").height());
+        var canvas = document.getElementById('canvas');
+        var x, y, width, height;
+        // Vertical image
+        if(image.height / image.width > 1) {
+            height = canvas.height;
+            width = image.width * height / image.height;
+            x = (canvas.width - width) / 2;
+            y = 0;
+        }
+        // Horizontal image
+        else {
+            width = canvas.width;
+            height = image.height * width / image.width;
+            x = 0;
+            y = (canvas.height - height) / 2;
+        }
+        this.context.drawImage(image, x, y, width, height);
     } else {
         document.getElementById("canvas").src = image.src;
     }

@@ -10,7 +10,6 @@
 * Licence : GNU GPL v3.0 http://www.gnu.org/copyleft/gpl.html
 */
 
-
 Player.prototype.initBinddings = function () {
     this.setKeyBinddings();
     this.setTouchBinddings();
@@ -49,8 +48,6 @@ Player.prototype.initSharing = function () {
 
 
         $('.player-sharing').append(
-
-
                 '<div class="sharing-box">' +
                   '<div id="ctn-close"><a href="#"><div class="btn-close"></div></a></div>' +
                       '<h1>SHARE THIS PHOTO</h1>' +
@@ -75,8 +72,9 @@ Player.prototype.initSharing = function () {
                                    '<a href="' + this.settings.downloadUrl + '" class="button embed-size" >Frames</a>' +
                                    '<a href="#" id="animatedGif" class="button embed-size" >Animated Gif</a>' +
                                    '<a href="#" id="mp4Video" class="button embed-size">MP4</a>' +
+                                   '<a href="#" id="saveToDropbox" class="button embed-size">Dropbox</a>' +
                                 '<label>MP4 length (Between 1 and 240, default is 10)</label>' +
-                                    '<input id="mp4Duration" value="10" type="nimber" min="1" max="240">'+
+                                    '<input id="mp4Duration" value="10" type="nimber" min="1" max="240">' +
                         '</div>' +
                  '</div>'
             );
@@ -231,6 +229,8 @@ Player.prototype.controlBar = function () {
     $("#animatedGif").click(function () { obj.animatedGif(); });
 
     $("#mp4Video").click(function () { obj.mp4Video(); });
+
+    $("#saveToDropbox").click(function () { obj.saveToDropbox(); });
 }
 
 /**
@@ -245,6 +245,7 @@ Player.prototype.toggleControl = function () {
         setTimeout(function () {
             $(".player-controls").fadeOut('slow');
             $('#canvas').css({ cursor: 'none' });
+            $('#watermark').css({ cursor: 'none' });
         }, 3000);
     }
 
@@ -260,11 +261,14 @@ Player.prototype.toggleControl = function () {
 
             $(".player-controls").fadeIn('slow');
             $('#canvas').css({ cursor: '' });
+            $('#watermark').css({ cursor: '' });
+
 
             timer = setTimeout(function () {
                 if (!$('.player-controls').is(":hover")) {
                     $(".player-controls").fadeOut('slow');
                     $('#canvas').css({ cursor: 'none' });
+                    $('#watermark').css({ cursor: 'none' });
                 }
             }, 3000);
 
@@ -533,7 +537,9 @@ Player.prototype.setResponsive = function () {
         obj.settings.width = $(".livePixel").parent().width();
         obj.settings.height = $(".livePixel").parent().width() / originalRatio;
         $(".livePixel").css({ 'width': obj.settings.width });
+        $("#canvas-wrapper").attr({ 'height': obj.settings.height, 'width': obj.settings.width });
         $("#canvas").attr({ 'height': obj.settings.height, 'width': obj.settings.width });
+        $("#watermark").attr({ 'height': obj.settings.height, 'width': obj.settings.width });
     } else {
         obj.setScreenRatio();
     }
@@ -566,18 +572,24 @@ Player.prototype.setScreenRatio = function () {
 
     if (obj.settings.fullScreen) {
 
-        $(".livePixel").css({ 'width': screen.width });
+        $(".livePixel").css({ 'width': screen.width, 'height': screen.height });
+        $("#canvas-wrapper").attr({ 'height': screen.height, 'width': screen.width });
         $("#canvas").attr({ 'height': screen.height, 'width': screen.width });
+        $("#watermark").attr({ 'height': screen.height, 'width': screen.width });
 
     } else {
         obj.screenRatio = 1;
-        $(".livePixel").css({ 'width': obj.settings.width * obj.screenRatio });
+        $(".livePixel").css({ 'width': obj.settings.width * obj.screenRatio, 'height': obj.settings.height * obj.screenRatio });
+        $("#canvas-wrapper").attr({ 'height': obj.settings.height * obj.screenRatio, 'width': obj.settings.width * obj.screenRatio });
         $("#canvas").attr({ 'height': obj.settings.height * obj.screenRatio, 'width': obj.settings.width * obj.screenRatio });
+        $("#watermark").attr({ 'height': obj.settings.height * obj.screenRatio, 'width': obj.settings.width * obj.screenRatio });
     }
 
     if (!obj.isAnimated && obj.imageSet != undefined) {
         obj.render(obj.imageSet.listImage.getElement());
     }
+
+    this.applyWatermark();
 }
 
 
@@ -660,4 +672,44 @@ Player.prototype.mp4Video = function () {
         "&duration=" + $('#mp4Duration').val();
 
     window.location.href = url;
+}
+
+Player.prototype.saveToDropbox = function () {
+    // Dropbox options
+    var options = {
+                files: [
+                    // You can specify up to 100 files.
+                    // {'url': '...', 'filename': '...'},
+                    {'url': this.settings.downloadUrl}
+                    // ...
+                ],
+
+                // Success is called once all files have been successfully added to the user's
+                // Dropbox, although they may not have synced to the user's devices yet.
+                success: function () {
+                    // Indicate to the user that the files have been saved.
+                    alert("Success! Files saved to your Dropbox.");
+                },
+
+                // Progress is called periodically to update the application on the progress
+                // of the user's downloads. The value passed to this callback is a float
+                // between 0 and 1. The progress callback is guaranteed to be called at least
+                // once with the value 1.
+                progress: function (progress) {
+                    console.log((progress*100) + "%");
+                },
+
+                // Cancel is called if the user presses the Cancel button or closes the Saver.
+                cancel: function () {
+                    console.log('Canceled');
+                },
+
+                // Error is called in the event of an unexpected response from the server
+                // hosting the files, such as not being able to find a file. This callback is
+                // also called if there is an error on Dropbox or if the user is over quota.
+                error: function (errorMessage) {
+                    console.log(errorMessage);
+                }
+            };
+    Dropbox.save(options);
 }

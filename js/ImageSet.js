@@ -9,7 +9,7 @@ function ImageSet(data, options) {
         totalCamera: 24,
         trim: false,
         trimSize: 24,
-        loop: true,
+        loop: true
     }
 
         if (options) { $.extend(this.settings, options) } //Over
