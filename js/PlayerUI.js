@@ -190,8 +190,8 @@ Player.prototype.controlBar = function () {
     });
 
     $(".btn-speedUp").click(function () {
-        if (obj.settings.rotationSpeed > 50) {
-            obj.settings.rotationSpeed -= 10;
+        if (obj.settings.rotationSpeed < 60) {
+            obj.settings.rotationSpeed += 10;
             obj.stop();
             obj.play();
         };
@@ -199,8 +199,8 @@ Player.prototype.controlBar = function () {
     });
 
     $(".btn-speedDown").click(function () {
-        if (obj.settings.rotationSpeed < 200) {
-            obj.settings.rotationSpeed += 10;
+        if (obj.settings.rotationSpeed > 10) {
+            obj.settings.rotationSpeed -= 10;
             obj.stop();
             obj.play();
         };
@@ -320,7 +320,7 @@ Player.prototype.setLoop = function (loop) {
 Player.prototype.fillInfoBox = function () {
     var fileName = this.imageSet.listImage.getElement().src.split("/");
     $("#fileName span").empty().append(fileName[fileName.length - 1]);
-    $("#speed span").empty().append("1/" + this.settings.rotationSpeed + " sec");
+    $("#speed span").empty().append(this.settings.rotationSpeed + " fps");
     $("#camera span").empty().append(pad(((this.imageSet.listImage.getPosition() % this.imageSet.settings.totalCamera) + 1)) + " / " + pad(this.imageSet.settings.totalCamera));
     $("#frame span").empty().append(pad((this.imageSet.listImage.getPosition() + 1)) + " / " + pad(this.imageSet.listImage.length));
     $("#serie span").empty().append(pad(Math.ceil(this.imageSet.listImage.getPosition() / this.imageSet.settings.totalCamera)) + " / " + pad(this.imageSet.listImage.length / this.imageSet.settings.totalCamera));
@@ -374,16 +374,16 @@ Player.prototype.setKeyBinddings = function () {
                 break;
 
             case 187:/*Speed Up --> + */
-                if (obj.settings.rotationSpeed > 50) {
-                    obj.settings.rotationSpeed -= 10;
+                if (obj.settings.rotationSpeed < 60) {
+                    obj.settings.rotationSpeed += 10;
                     obj.stop();
                     obj.play();
                 };
                 break;
 
             case 189:/*SpeedDown --> - */
-                if (obj.settings.rotationSpeed < 200) {
-                    obj.settings.rotationSpeed += 10;
+                if (obj.settings.rotationSpeed > 10) {
+                    obj.settings.rotationSpeed -= 10;
                     obj.stop();
                     obj.play();
                 };
@@ -651,7 +651,7 @@ function toggleFullScreen() {
 Player.prototype.animatedGif = function () {
     var obj = this;
     var url = "/index.aspx?a=ImageToContent.CreateGif&nh=1&ajax=1" +
-              "&speed=" + this.settings.rotationSpeed +
+              "&speed=" + (1000 / this.settings.rotationSpeed) +
               "&loop=" + this.settings.loop +
               "&clockwise=" + obj.clockwise +
               "&path=" + this.imageSet.data.folderName + "/";

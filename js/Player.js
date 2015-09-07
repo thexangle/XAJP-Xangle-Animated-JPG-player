@@ -79,7 +79,7 @@ function Player(options, context, path) {
         autoPlay: false,
         autoPlaySpeed: 10000,
         crossFade: false,
-        rotationSpeed: 100,
+        rotationSpeed: 20,
         autoUpdateSpeed: 2000,
 
         credit: "",
@@ -332,7 +332,7 @@ Player.prototype.play = function (type) {
         } else if (type == "camera") {
             obj.render(obj.imageSet.nextCamera()); //Camera animation in stopMotion
         }
-    }, obj.settings.rotationSpeed);  
+    }, (1000 / obj.settings.rotationSpeed));  
 }
 
 
