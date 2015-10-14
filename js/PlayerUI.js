@@ -191,7 +191,7 @@ Player.prototype.controlBar = function () {
 
     $(".btn-speedUp").click(function () {
         if (obj.settings.rotationSpeed < 60) {
-            obj.settings.rotationSpeed += 10;
+            obj.settings.rotationSpeed += 5;
             obj.stop();
             obj.play();
         };
@@ -200,7 +200,7 @@ Player.prototype.controlBar = function () {
 
     $(".btn-speedDown").click(function () {
         if (obj.settings.rotationSpeed > 10) {
-            obj.settings.rotationSpeed -= 10;
+            obj.settings.rotationSpeed -= 5;
             obj.stop();
             obj.play();
         };
@@ -650,8 +650,9 @@ function toggleFullScreen() {
 */
 Player.prototype.animatedGif = function () {
     var obj = this;
+    console.log(this.settings.rotationSpeed);
     var url = "/index.aspx?a=ImageToContent.CreateGif&nh=1&ajax=1" +
-              "&speed=" + (1000 / this.settings.rotationSpeed) +
+              "&speed=" + this.settings.rotationSpeed +
               "&loop=" + this.settings.loop +
               "&clockwise=" + obj.clockwise +
               "&path=" + this.imageSet.data.folderName + "/";
