@@ -136,7 +136,7 @@
 
 
 @media (max-width: 600px) {
-    .btn-area > .btn-info, .btn-area > .btn-fullScreen, .btn-area .credit, .btn-area .btn-share, .player-sharing { display: none!important; }
+    .btn-area > .btn-info, .btn-area > .btn-fullScreen, .btn-area .credit/*, .btn-area .btn-share, .player-sharing*/, #permanentAddress, #shortAddress, #embed-options-panel { display: none!important; }
     .player-controls {display: none;}
 }
 
@@ -146,7 +146,7 @@
     height: 540px; 
 }
 
-#canvas-wrapper canvas {
+#canvas, #watermark {
     position: absolute;
     top: 0;
     left: 0;

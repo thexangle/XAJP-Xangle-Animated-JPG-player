@@ -104,7 +104,9 @@ function Player(options, context, path) {
         keyBindings: true,
         touchBiddings: true,
         
-        record: false
+        record: false,
+
+        mp4Length: 15
     }
 
     if (options) {

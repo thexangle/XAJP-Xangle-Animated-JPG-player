@@ -51,11 +51,11 @@ Player.prototype.initSharing = function () {
                 '<div class="sharing-box">' +
                   '<div id="ctn-close"><a href="#"><div class="btn-close"></div></a></div>' +
                       '<h1>SHARE THIS PHOTO</h1>' +
-                      '<div class="group">' +
+                      '<div class="group" id="permanentAddress">' +
                             '<label>Permanent Address:</label>' +
                             '<input " type="text" onClick="this.select();" value="' + this.settings.permUrl + '">' +
                        '</div>' +
-                        '<div class="group">' +
+                        '<div class="group" id="shortAddress">' +
                             '<label>Short Address:</label>' +
                             '<input type="text" onClick="this.select();" value="' + this.settings.shortUrl + '">' +
                         '</div>' +
@@ -73,8 +73,10 @@ Player.prototype.initSharing = function () {
                                    '<a href="#" id="animatedGif" class="button embed-size" >Animated Gif</a>' +
                                    '<a href="#" id="mp4Video" class="button embed-size">MP4</a>' +
                                    '<a href="#" id="saveToDropbox" class="button embed-size">Dropbox</a>' +
-                                '<label>MP4 length (Between 1 and 240, default is 10)</label>' +
-                                    '<input id="mp4Duration" value="10" type="nimber" min="1" max="240">' +
+                                '<div id="mp4Length" style="display:none;">' +
+                                    '<label>MP4 length (Between 1 and 240, default is ' + this.settings.mp4Length + ')</label>' +
+                                    '<input id="mp4Duration" value="' + this.settings.mp4Length + '" type="number" min="1" max="240">' +
+                                '</div>' +
                         '</div>' +
                  '</div>'
             );
@@ -127,9 +129,18 @@ Player.prototype.controlBar = function () {
         );
 
 
-        $(".btn-previous").click(function () { obj.previous(); });
-        $(".btn-next").click(function () { obj.next(); });
-        $(".btn-shuffle").click(function () { obj.settings.shuffle = true; });
+        $(".btn-previous").click(function () { 
+            obj.previous(); 
+            return false;
+        });
+        $(".btn-next").click(function () {
+            obj.next();
+            return false;
+        });
+        $(".btn-shuffle").click(function () { 
+            obj.settings.shuffle = true; 
+            return false;
+        });
     }
 
     if (obj.settings.loop) {
@@ -216,7 +227,7 @@ Player.prototype.controlBar = function () {
 
     $(".btn-share, .btn-close").click(function () {
         $('.player-sharing').fadeToggle('fast');
-
+        return false;
     });
 
     // Data-embed to input box
@@ -224,13 +235,23 @@ Player.prototype.controlBar = function () {
         $(".embed-size").removeClass('active');
         $(this).addClass('active');
         $('#embed-code').val($(this).data("embed"));
+        return false;
     });
 
-    $("#animatedGif").click(function () { obj.animatedGif(); });
+    $("#animatedGif").click(function () { 
+        obj.animatedGif(); 
+        return false;
+    });
 
-    $("#mp4Video").click(function () { obj.mp4Video(); });
+    $("#mp4Video").click(function () { 
+        obj.mp4Video(); 
+        return false;
+    });
 
-    $("#saveToDropbox").click(function () { obj.saveToDropbox(); });
+    $("#saveToDropbox").click(function () { 
+        obj.saveToDropbox(); 
+        return false;
+    });
 }
 
 /**
