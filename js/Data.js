@@ -43,8 +43,16 @@ function arrayToData(array) {
 * fileName: array of all name
 */
 Array.prototype.stringToData = function (string) {
+
+    // Matthias modification on 11/09/2015
+    /* this.clear();
+    var dataArray = string.split("\n"); */
+
     this.clear();
-    var dataArray = string.split("\n");
+    var dataArray = string.split("X");
+    if(dataArray.length > 1) {
+        dataArray.pop();
+    }
 
     for (var i = 0; i < dataArray.length; i++) {
         tmp = dataArray[i].split("|");
@@ -52,4 +60,3 @@ Array.prototype.stringToData = function (string) {
         this.push(tmp);
     }
 }
-
