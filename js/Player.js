@@ -26,7 +26,7 @@ $.fn.Player = function (options, path) {
     $(this).append(
            '<div id="player-content"></div>' + //Player.js dynamicly insert canvas or img tag here
            '<div class="player-sharing"></div>' +
-           '<div id="status"></div>' +
+           '<div id="status" style="display: none;" class="ui-progressbar ui-widget ui-widget-content ui-corner-all" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0"></div>' +
            '<div class="infoBox"></div>' +
            '<div id="play-container"><a href="#" id="big-btn-play"><img src="img/play-button.png" ></a></div>' +
            '<div class="player-controls"></div>'

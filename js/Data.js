@@ -21,10 +21,10 @@ function arrayToData(array) {
     tmp = tmp.toString();
     data.folderName = tmp.replace(/\,/g, "/");
 
-    //Formating the fileName
-    if (array[array.length] == undefined) {// If the last node is undefined --> patch for orangium
+    //Formating the fileName // not working in preview mode, should RECHECK later cause there must be a reason for it :)
+    /*if (array[array.length] == undefined) {// If the last node is undefined --> patch for orangium
         array.pop();
-    }
+    }*/
 
     for (var i = 1; i < array.length; i++) {
         var tmp = array[i].split("/");

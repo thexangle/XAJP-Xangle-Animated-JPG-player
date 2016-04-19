@@ -12,14 +12,14 @@ function ImageSet(data, options) {
         loop: true
     }
 
-        if (options) { $.extend(this.settings, options) } //Over
+    if (options) { $.extend(this.settings, options) } //Over
 
-        this.data = data;
-        this.listImage = new NodeList();
-        this.trimIncr = 0;
-        this.status = 0;
+    this.data = data;
+    this.listImage = new NodeList();
+    this.trimIncr = 0;
+    this.status = 0;
 
-        this.preloadImages(); //Load images in the listImage Array at the creation
+    this.preloadImages(); //Load images in the listImage Array at the creation
 }
 
 
@@ -41,7 +41,7 @@ ImageSet.prototype.preloadImages = function () {
         if ($this.status != 100) {
             for (var i = 0; i < $this.listImage.length; i++) {
                 if ($this.listImage[i] == undefined || $this.listImage[i].complete) {
-                    var percent = Math.round(i / ($this.listImage.length-1) * 100);
+                    var percent = Math.round((i + 1) / ($this.listImage.length) * 100);
                     if (percent > $this.status) {
                         $this.status = percent;
                     }
@@ -50,7 +50,7 @@ ImageSet.prototype.preloadImages = function () {
             setTimeout(function () {
                 statusUpdate($this);
             }, 50);
-        } 
+        }
     }
 
     statusUpdate(this);
